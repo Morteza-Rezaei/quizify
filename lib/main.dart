@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quizify/blocs/bloc_providers.dart';
 import 'package:quizify/constants/theme/theme.dart';
@@ -9,6 +10,11 @@ import 'package:quizify/utils/util.dart';
 
 void main() async {
   await Global.init();
+  // Lock the screen orientation to portrait mode
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 

@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quizify/blocs/sign_in_blocs/sign_in_blocs.dart';
+import 'package:quizify/blocs/sign_in_blocs/sign_in_events.dart';
+import 'package:quizify/blocs/sign_in_blocs/sign_in_states.dart';
 import 'package:quizify/constants/padding/paddings.dart';
+import 'package:quizify/constants/values/paths/auth_paths.dart';
+import 'package:quizify/constants/values/strings/sign_in_text.dart';
+import 'package:quizify/widgets/app_widgets.dart';
+import 'package:quizify/widgets/sign_in_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -14,49 +22,99 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: kHorizontalPadding,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // the email field
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (value.isNotEmpty && !value.contains('@')) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-              ),
+    return BlocBuilder<SignInBloc, SignInState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: Form(
+            key: _formKey,
+            child: SafeArea(
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Padding(
+                      padding: const EdgeInsets.all(kDefaultPadding),
+                      child: Column(
+                        children: [
+                          const Spacer(),
+                          // Tile Image
+                          signInScreenTitleImage(),
+                          // Title Text
+                          signInScreenTitle(context),
+                          //Email TextFormField
+                          authScreenTextFormField(
+                            fieldType: 'email',
+                            hintText: SignInText.labelEmail,
+                            keyboardType: TextInputType.emailAddress,
+                            onSaved: (value) {
+                              context.read<SignInBloc>().add(EmailEvent(value));
+                            },
+                          ),
 
-              ElevatedButton(
-                onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  }
-                },
-                child: const Text('Submit'),
+                          //Password TextFormField
+                          authScreenTextFormField(
+                            fieldType: 'password',
+                            hintText: SignInText.labelPassword,
+                            obscureText: true,
+                            onSaved: (value) {
+                              context
+                                  .read<SignInBloc>()
+                                  .add(PasswordEvent(value));
+                            },
+                          ),
+
+                          // forgot password text button
+                          forgotPasswordTextButton(context),
+
+                          // sign in password
+                          ElevatedButton(
+                            onPressed: () {
+                              // Validate returns true if the form is valid, or false otherwise.
+                              if (_formKey.currentState!.validate()) {
+                                // If the form is valid, display a snackbar. In the real world,
+                                // you'd often call a server or save the information in a database.
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Processing Data'),
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              SignInText.signInButton,
+                            ),
+                          ),
+
+                          // third party sign in
+                          dividerTextDivider(
+                            context: context,
+                            text: SignInText.signInOr,
+                          ),
+                          // Google Sign In
+                          googleSignInButton(
+                            context: context,
+                            iconPath: AuthPaths.googleIcon,
+                            label: SignInText.signInWithGoogle,
+                          ),
+
+                          const Spacer(),
+
+                          authPagesNavigationTextButton(
+                            context: context,
+                            text1: SignInText.signInDontHaveAccount1,
+                            text2: SignInText.signInDontHaveAccount2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

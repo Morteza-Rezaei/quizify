@@ -32,7 +32,7 @@ InputDecorationTheme inputDecorationTheme(ColorScheme colorScheme) {
     ),
     contentPadding: const EdgeInsets.symmetric(
       horizontal: kHorizontalPadding,
-      vertical: kVericalPadding,
+      vertical: kVericalPadding * 0.8,
     ),
   );
 }
@@ -45,6 +45,28 @@ ElevatedButtonThemeData elevatedButtonThemeData(ColorScheme colorScheme) {
       backgroundColor: AppColors.primary50,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kButtonBorderRadius),
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: kHorizontalPadding * 2,
+        vertical: kVericalPadding * 0.8,
+      ),
+    ),
+  );
+}
+
+// our app's custom outlined button theme
+OutlinedButtonThemeData outlinedButtonThemeData(ColorScheme colorScheme) {
+  return OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      foregroundColor: AppColors.primary50,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          kButtonBorderRadius,
+        ),
+      ),
+      side: const BorderSide(
+        color: AppColors.primary50,
+        width: 1,
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: kHorizontalPadding * 2,

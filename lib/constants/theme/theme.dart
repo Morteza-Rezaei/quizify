@@ -16,6 +16,7 @@ class MaterialTheme {
         // our custom theme and styling of the components
         inputDecorationTheme: inputDecorationTheme(colorScheme),
         elevatedButtonTheme: elevatedButtonThemeData(colorScheme),
+        outlinedButtonTheme: outlinedButtonThemeData(colorScheme),
       );
 
   List<ExtendedColor> get extendedColors => [];
