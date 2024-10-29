@@ -6,7 +6,7 @@ import 'package:quizify/blocs/sign_in_blocs/sign_in_states.dart';
 import 'package:quizify/constants/padding/paddings.dart';
 import 'package:quizify/constants/values/paths/auth_paths.dart';
 import 'package:quizify/constants/values/strings/sign_in_text.dart';
-import 'package:quizify/widgets/app_widgets.dart';
+import 'package:quizify/widgets/auth_widgets.dart';
 import 'package:quizify/widgets/sign_in_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -34,14 +34,22 @@ class _SignInScreenState extends State<SignInScreen> {
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: Padding(
-                      padding: const EdgeInsets.all(kDefaultPadding),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: kHorizontalPadding,
+                      ),
                       child: Column(
                         children: [
                           const Spacer(),
                           // Tile Image
-                          signInScreenTitleImage(),
+                          authScreenTitleImage(
+                            imagePath: AuthPaths.signIn,
+                            height: kDefaultPadding * 4,
+                          ),
                           // Title Text
-                          signInScreenTitle(context),
+                          authInScreenTitle(
+                            context: context,
+                            title: SignInText.title,
+                          ),
                           //Email TextFormField
                           authScreenTextFormField(
                             fieldType: 'email',

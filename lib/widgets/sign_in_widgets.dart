@@ -1,34 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
-import 'package:quizify/constants/values/paths/auth_paths.dart';
 import 'package:quizify/constants/values/strings/sign_in_text.dart';
-
-// sign in screen title image
-Widget signInScreenTitleImage() {
-  return Container(
-    margin: const EdgeInsets.symmetric(
-      vertical: kVericalPadding * 2,
-    ),
-    height: kDefaultPadding * 4,
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage(AuthPaths.signIn),
-      ),
-    ),
-  );
-}
-
-// sign in screen title
-Widget signInScreenTitle(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: kVericalPadding * 1.2),
-    child: Text(
-      SignInText.title,
-      style: Theme.of(context).textTheme.titleLarge,
-    ),
-  );
-}
+import 'package:quizify/screens/forgot_password/forgot_pasword.dart';
 
 // forgot password textbutton
 Widget forgotPasswordTextButton(BuildContext context) {
@@ -43,7 +17,12 @@ Widget forgotPasswordTextButton(BuildContext context) {
       children: [
         GestureDetector(
           onTap: () {
-            //Todo: navigate to forgot password screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ForgotPaswordScreen(),
+              ),
+            );
           },
           child: Text(
             SignInText.forgotPassword,

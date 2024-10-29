@@ -17,6 +17,7 @@ class MaterialTheme {
         inputDecorationTheme: inputDecorationTheme(colorScheme),
         elevatedButtonTheme: elevatedButtonThemeData(colorScheme),
         outlinedButtonTheme: outlinedButtonThemeData(colorScheme),
+        appBarTheme: appBarTheme(colorScheme),
       );
 
   List<ExtendedColor> get extendedColors => [];

@@ -75,3 +75,15 @@ OutlinedButtonThemeData outlinedButtonThemeData(ColorScheme colorScheme) {
     ),
   );
 }
+
+// our app's custom app bar theme
+AppBarTheme appBarTheme(ColorScheme colorScheme) {
+  return AppBarTheme(
+    backgroundColor: colorScheme.surface,
+    elevation: 0,
+    iconTheme: IconThemeData(
+      color: colorScheme.onSurface,
+    ),
+    centerTitle: true,
+  );
+}
