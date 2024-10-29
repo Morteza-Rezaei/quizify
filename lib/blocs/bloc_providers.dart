@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quizify/blocs/forgot_password_blocs/forgot_password_blocs.dart';
 import 'package:quizify/blocs/landing_blocs/landing_blocs.dart';
 import 'package:quizify/blocs/sign_in_blocs/sign_in_blocs.dart';
+import 'package:quizify/blocs/sign_up_blocs/sign_up_blocs.dart';
 
 class AppBlocProviders {
   static get allBlocProviders => [
@@ -19,6 +20,9 @@ class AppBlocProviders {
         ),
         BlocProvider(
           create: (context) => ForgotPasswordBlocs(),
+        ),
+        BlocProvider(
+          create: (context) => SignUpBlocs(),
         ),
       ];
 }

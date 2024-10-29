@@ -6,9 +6,15 @@ class ForgotPasswordBlocs
     extends Bloc<ForgotPasswordEvent, ForgotPasswordStates> {
   ForgotPasswordBlocs() : super(const ForgotPasswordStates()) {
     on<EmailEvent>(_emailEvent);
+    on<ResetForgotPasswordEvent>(_resetEvent);
   }
 
   void _emailEvent(EmailEvent event, Emitter<ForgotPasswordStates> emit) {
     emit(state.copyWith(email: event.email));
+  }
+
+  void _resetEvent(
+      ResetForgotPasswordEvent event, Emitter<ForgotPasswordStates> emit) {
+    emit(const ForgotPasswordStates());
   }
 }

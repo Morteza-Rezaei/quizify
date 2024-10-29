@@ -163,11 +163,10 @@ Widget authPagesNavigationTextButton({
   required BuildContext context,
   required String text1,
   required String text2,
+  required void Function() onPressed,
 }) {
   return GestureDetector(
-    onTap: () {
-      // Navigate to Sign Up Screen or Sign In Screen
-    },
+    onTap: onPressed,
     child: Padding(
       padding: const EdgeInsets.symmetric(
         vertical: kVericalPadding,

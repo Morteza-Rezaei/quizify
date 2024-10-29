@@ -12,4 +12,4 @@ class PasswordEvent extends SignInEvent {
   PasswordEvent(this.password);
 }
 
-class ResetEvent extends SignInEvent {}
+class ResetSignInEvent extends SignInEvent {}

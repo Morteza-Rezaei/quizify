@@ -6,6 +6,7 @@ import 'package:quizify/blocs/sign_in_blocs/sign_in_states.dart';
 import 'package:quizify/constants/padding/paddings.dart';
 import 'package:quizify/constants/values/paths/auth_paths.dart';
 import 'package:quizify/constants/values/strings/sign_in_text.dart';
+import 'package:quizify/screens/sign_up/sign_up.dart';
 import 'package:quizify/widgets/auth_widgets.dart';
 import 'package:quizify/widgets/sign_in_widgets.dart';
 
@@ -112,6 +113,15 @@ class _SignInScreenState extends State<SignInScreen> {
                             context: context,
                             text1: SignInText.signInDontHaveAccount1,
                             text2: SignInText.signInDontHaveAccount2,
+                            onPressed: () {
+                              // push the sign up screen
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen(),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
