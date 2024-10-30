@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/strings/quiz_text.dart';
 import 'package:quizify/data/models/subject_model.dart';
+import 'package:quizify/screens/quiz/quiz_screen_settings.dart';
 import 'package:quizify/widgets/app_widgets.dart';
 import 'package:quizify/widgets/quiz_widgets.dart';
 
@@ -18,6 +19,8 @@ class QuizScreenTopicsScreen extends StatefulWidget {
 }
 
 class _QuizScreenTopicsScreenState extends State<QuizScreenTopicsScreen> {
+  List<String> selectedTopics = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +41,20 @@ class _QuizScreenTopicsScreenState extends State<QuizScreenTopicsScreen> {
             // the list of topics
             quizTopicsList(
               topics: widget.subject.topics,
-              onChanged: (value) {},
+              selectedTopics: selectedTopics,
+              onChanged: (isChecked, topic) {
+                setState(() {
+                  if (isChecked == true) {
+                    // add topic if checked and not already in the list
+                    if (!selectedTopics.contains(topic)) {
+                      selectedTopics.add(topic);
+                    }
+                  } else {
+                    // remove topic if unchecked
+                    selectedTopics.remove(topic);
+                  }
+                });
+              },
             ),
 
             // the continue button
@@ -47,7 +63,14 @@ class _QuizScreenTopicsScreenState extends State<QuizScreenTopicsScreen> {
                 vertical: kVericalPadding,
               ),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // navigate and pass the selected topics
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => QuizScreenSettingsScreen(
+                              selectedTopics: selectedTopics)));
+                },
                 child: const Text(
                   QuizText.selectSubjectButton,
                 ),

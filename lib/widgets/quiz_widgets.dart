@@ -61,7 +61,8 @@ Widget quizHeader({
 // the list of topics
 Widget quizTopicsList({
   required List<String> topics,
-  required ValueChanged<bool?> onChanged,
+  required List<String> selectedTopics,
+  required void Function(bool?, String) onChanged,
 }) {
   return // the list of topics
       ListView.builder(
@@ -72,6 +73,7 @@ Widget quizTopicsList({
     ),
     itemCount: topics.length,
     itemBuilder: (BuildContext context, int index) {
+      final topic = topics[index];
       return Column(
         children: [
           Container(
@@ -85,14 +87,14 @@ Widget quizTopicsList({
               boxShadow: AppShadows.smallCardShadows,
             ),
             child: CheckboxListTile(
-              title: Text(topics[index]),
-              value: false,
-              activeColor: AppColors.neutral50,
+              title: Text(topic),
+              value: selectedTopics.contains(topic),
+              activeColor: AppColors.primary50,
               side: const BorderSide(
                 color: AppColors.neutral70,
                 width: 1.5,
               ),
-              onChanged: onChanged,
+              onChanged: (isChecked) => onChanged(isChecked, topic),
             ),
           ),
         ],
