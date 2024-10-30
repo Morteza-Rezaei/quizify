@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quizify/blocs/bloc_providers.dart';
 import 'package:quizify/constants/theme/theme.dart';
 import 'package:quizify/global.dart';
+import 'package:quizify/screens/home/home_screen.dart';
 import 'package:quizify/screens/landing/landing_screen.dart';
 import 'package:quizify/screens/sign_in/sign_in_screen.dart';
 import 'package:quizify/utils/util.dart';
@@ -50,8 +51,7 @@ class MyApp extends StatelessWidget {
       initialScreen = const LandingScreen();
     } else if (isLoggedIn) {
       // If the user is logged in, go to the app home screen
-      // for now we will use the sign in screen
-      initialScreen = const SignInScreen();
+      initialScreen = const HomeScreen();
     } else {
       // If the user is not logged in, go to the sign-in screen
       initialScreen = const SignInScreen();

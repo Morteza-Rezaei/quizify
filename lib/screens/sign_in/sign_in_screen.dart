@@ -6,6 +6,9 @@ import 'package:quizify/blocs/sign_in_blocs/sign_in_states.dart';
 import 'package:quizify/constants/padding/paddings.dart';
 import 'package:quizify/constants/values/paths/auth_paths.dart';
 import 'package:quizify/constants/values/strings/sign_in_text.dart';
+import 'package:quizify/data/service/storage_constants.dart';
+import 'package:quizify/global.dart';
+import 'package:quizify/screens/home/home_screen.dart';
 import 'package:quizify/screens/sign_up/sign_up.dart';
 import 'package:quizify/widgets/auth_widgets.dart';
 import 'package:quizify/widgets/sign_in_widgets.dart';
@@ -83,10 +86,21 @@ class _SignInScreenState extends State<SignInScreen> {
                               if (_formKey.currentState!.validate()) {
                                 // If the form is valid, display a snackbar. In the real world,
                                 // you'd often call a server or save the information in a database.
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Processing Data'),
+
+                                // this will trigger the onSaved method of the text form fields
+                                _formKey.currentState!.save();
+
+                                // we just hard code the user token for now
+                                Global.storageService.setString(
+                                    StorageConstants.userToken, 'userToken');
+
+                                // for now we just navigate to the home screen
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomeScreen(),
                                   ),
+                                  (route) => false,
                                 );
                               }
                             },

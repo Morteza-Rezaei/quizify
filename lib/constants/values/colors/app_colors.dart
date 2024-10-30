@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // neutral colors
+  static const neutral40 = Color(0xFF5F5E5E);
   static const neutral50 = Color(0xFF787777);
   static const neutral70 = Color(0xFFADABAB);
 
