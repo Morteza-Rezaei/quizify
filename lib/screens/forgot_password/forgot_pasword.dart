@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quizify/blocs/forgot_password_blocs/forgot_password_blocs.dart';
 import 'package:quizify/blocs/forgot_password_blocs/forgot_password_events.dart';
 import 'package:quizify/blocs/forgot_password_blocs/forgot_password_states.dart';
-import 'package:quizify/constants/padding/paddings.dart';
+import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/paths/auth_paths.dart';
 import 'package:quizify/constants/values/strings/forgot_password_text.dart';
 import 'package:quizify/widgets/app_widgets.dart';

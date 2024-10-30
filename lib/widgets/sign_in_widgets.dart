@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizify/constants/padding/paddings.dart';
+import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
 import 'package:quizify/constants/values/strings/sign_in_text.dart';
 import 'package:quizify/screens/forgot_password/forgot_pasword.dart';

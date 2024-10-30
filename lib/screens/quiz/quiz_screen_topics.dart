@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quizify/constants/padding_and_border/paddings.dart';
+import 'package:quizify/constants/values/strings/quiz_text.dart';
 import 'package:quizify/data/models/subject_model.dart';
+import 'package:quizify/widgets/app_widgets.dart';
+import 'package:quizify/widgets/quiz_widgets.dart';
 
 class QuizScreenTopicsScreen extends StatefulWidget {
   const QuizScreenTopicsScreen({
@@ -18,16 +22,39 @@ class _QuizScreenTopicsScreenState extends State<QuizScreenTopicsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.subject.name),
+        leading: backButton(context),
       ),
-      body: ListView.builder(
-        itemCount: widget.subject.topics.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(widget.subject.topics[index]),
-            onTap: () {},
-          );
-        },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // the header of the quiz page
+            quizHeader(
+              context: context,
+              title: widget.subject.name,
+              description: QuizText.selectSubjectDescription,
+              imagePath: widget.subject.imagePath,
+            ),
+
+            // the list of topics
+            quizTopicsList(
+              topics: widget.subject.topics,
+              onChanged: (value) {},
+            ),
+
+            // the continue button
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: kVericalPadding,
+              ),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text(
+                  QuizText.selectSubjectButton,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

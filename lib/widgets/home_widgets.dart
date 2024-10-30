@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quizify/constants/padding/paddings.dart';
+import 'package:quizify/constants/padding_and_border/border_radius.dart';
+import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
 import 'package:quizify/constants/values/paths/home_paths.dart';
 import 'package:quizify/constants/values/strings/home_text.dart';
@@ -97,7 +98,7 @@ Widget subjectCard({
       // shadow and decoration
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(kCardBorderRadius),
         boxShadow: AppShadows.bigCardShadows,
       ),
       child: Row(

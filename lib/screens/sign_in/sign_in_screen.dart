@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quizify/blocs/sign_in_blocs/sign_in_blocs.dart';
 import 'package:quizify/blocs/sign_in_blocs/sign_in_events.dart';
 import 'package:quizify/blocs/sign_in_blocs/sign_in_states.dart';
-import 'package:quizify/constants/padding/paddings.dart';
+import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/paths/auth_paths.dart';
 import 'package:quizify/constants/values/strings/sign_in_text.dart';
 import 'package:quizify/data/service/storage_constants.dart';

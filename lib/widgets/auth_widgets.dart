@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizify/constants/padding/paddings.dart';
+import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
 
 // auth screen title image

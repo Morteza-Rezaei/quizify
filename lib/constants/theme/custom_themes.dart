@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quizify/constants/padding/border_radius.dart';
-import 'package:quizify/constants/padding/paddings.dart';
+import 'package:quizify/constants/padding_and_border/border_radius.dart';
+import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
 
 // our app's custom input decoration theme
