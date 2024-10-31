@@ -12,6 +12,7 @@ class QuizScreenTopicsScreen extends StatefulWidget {
     required this.subject,
   });
 
+  // for the subject details
   final Subject subject;
 
   @override
@@ -64,12 +65,27 @@ class _QuizScreenTopicsScreenState extends State<QuizScreenTopicsScreen> {
               ),
               child: ElevatedButton(
                 onPressed: () {
+                  // show a snackbar if no topic is selected
+                  if (selectedTopics.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          QuizText.selectSubjectError,
+                        ),
+                      ),
+                    );
+                    return;
+                  }
                   // navigate and pass the selected topics
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => QuizScreenSettingsScreen(
-                              selectedTopics: selectedTopics)));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizScreenSettingsScreen(
+                        selectedTopics: selectedTopics,
+                        subject: widget.subject,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text(
                   QuizText.selectSubjectButton,
