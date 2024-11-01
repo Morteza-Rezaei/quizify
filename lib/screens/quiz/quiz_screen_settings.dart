@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/paths/quiz_path.dart';
 import 'package:quizify/constants/values/strings/quiz_text.dart';
+import 'package:quizify/data/models/quiz_model.dart';
 import 'package:quizify/data/models/subject_model.dart';
+import 'package:quizify/data/service/quiz_service.dart';
+import 'package:quizify/screens/quiz/quiz_screen_start.dart';
 import 'package:quizify/widgets/app_widgets.dart';
 import 'package:quizify/widgets/quiz_widgets.dart';
 
@@ -191,7 +194,19 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
                 vertical: kVericalPadding,
               ),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  // Todo: show a loading screen and generate the quiz via gemini api
+                  // Todo: pass the selected options to the quiz and generate the quiz
+                  // navigate to the quiz screen
+                  // Fetch the quiz data
+                  Quiz quiz = await fetchQuizData();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizScreenStartScreen(quiz: quiz),
+                    ),
+                  );
+                },
                 child: const Text(
                   QuizText.selectSubjectButton,
                 ),

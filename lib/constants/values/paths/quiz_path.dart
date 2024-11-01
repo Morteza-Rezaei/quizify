@@ -10,4 +10,11 @@ class QuizPath {
   static const String typeOption1 = "assets/images/type_option_1.png";
   static const String typeOption2 = "assets/images/type_option_2.png";
   static const String typeOption3 = "assets/images/type_option_3.png";
+
+  static const String score = "assets/images/score.png";
+  static const String correct = "assets/images/correct.png";
+  static const String wrong = "assets/images/wrong.png";
+  static const String share = "assets/images/share.png";
+  static const String tryAgain = "assets/images/try_again.png";
+  static const String home = "assets/images/home.png";
 }

@@ -33,4 +33,16 @@ class QuizText {
   static const String quizTypeOption1 = "Test (4 şık)";
   static const String quizTypeOption2 = "Test (5 şık)";
   static const String quizTypeOption3 = "Doğru/Yanlış";
+
+  // the quiz screen
+  static const String quizScreenButton = "Cevabı Kaydet";
+
+  // the result screen
+  static const String resultHeader = "Quiz Sonuçları";
+  static const String resultTitle = "Detaylı Sonuçlar:";
+  static const String resultDescription =
+      "Cevaplarınız aşağıda gösterilmektedir. Doğru cevaplar yeşil; yanlış cevaplar ise kırmızı renkte görünmektedir.";
+  static const String resultShareButton = "Paylaş";
+  static const String resultRetryButton = "Tekrar Dene";
+  static const String resultHomeButton = "Anasayfa";
 }

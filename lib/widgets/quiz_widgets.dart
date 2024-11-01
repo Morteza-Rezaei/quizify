@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/border_radius.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
+import 'package:quizify/constants/values/strings/quiz_text.dart';
 import 'package:quizify/widgets/shadow_widgets.dart';
 
 // the header of the quiz pages
@@ -293,6 +294,217 @@ Widget fourCardsInRow({
           title: title4,
           isActive: isActive == 3,
           onTap: onTap4,
+        ),
+      ],
+    ),
+  );
+}
+
+// the Quiz Question widget
+Widget quizQuestion({
+  required BuildContext context,
+  required int questionIndex,
+  required String question,
+}) {
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.only(
+      right: kHorizontalPadding,
+      left: kHorizontalPadding,
+      top: kVericalPadding * 2,
+      bottom: kVericalPadding / 2,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Soru $questionIndex',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: AppColors.primary,
+              ),
+        ),
+        Text(
+          question,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      ],
+    ),
+  );
+}
+
+// the answer card widget
+Widget answerCard({
+  required BuildContext context,
+  required bool isSelected,
+  required void Function() onTap,
+  required String leadingLetter,
+  required String answer,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(
+        horizontal: kHorizontalPadding,
+        vertical: kVericalPadding / 2,
+      ),
+      padding: const EdgeInsets.symmetric(
+        vertical: kVericalPadding,
+        horizontal: kHorizontalPadding,
+      ),
+      decoration: BoxDecoration(
+        color: isSelected ? AppColors.primary90 : Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(kCardBorderRadius),
+        boxShadow: AppShadows.smallCardShadows,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            leadingLetter,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: AppColors.primary50,
+                ),
+          ),
+          const SizedBox(
+            width: kInBetweenSpacing,
+          ),
+          Flexible(
+            child: Text(
+              answer,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+// the quiz result Big Header widget
+Widget quizBigHeader({
+  required BuildContext context,
+  required String title,
+}) {
+  return SafeArea(
+    child: Padding(
+      padding: const EdgeInsets.only(
+        top: kVericalPadding * 3,
+        bottom: kVericalPadding * 2,
+      ),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.displaySmall!.copyWith(
+              color: AppColors.primary,
+            ),
+      ),
+    ),
+  );
+}
+
+// the title and the description widget
+Widget titleAndDescription({
+  required BuildContext context,
+  required String title,
+  required String description,
+}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(
+      horizontal: kHorizontalPadding,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          QuizText.resultTitle,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: AppColors.primary,
+              ),
+        ),
+        Text(
+          QuizText.resultDescription,
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: AppColors.neutral70,
+              ),
+        ),
+      ],
+    ),
+  );
+}
+
+// the result card widget
+Widget resultCard({
+  required BuildContext context,
+  required int questionNo,
+  required String question,
+  required bool isCorrect,
+  required String leadingLetter,
+  required String answer,
+}) {
+  return Container(
+    width: MediaQuery.of(context).size.width - kHorizontalPadding * 3,
+    margin: const EdgeInsets.symmetric(
+      horizontal: kInBetweenSpacing,
+      vertical: kVericalPadding,
+    ),
+    padding: const EdgeInsets.symmetric(
+      vertical: kVericalPadding,
+      horizontal: kHorizontalPadding,
+    ),
+    decoration: BoxDecoration(
+      color: Theme.of(context).cardColor,
+      borderRadius: BorderRadius.circular(kCardBorderRadius),
+      boxShadow: AppShadows.smallCardShadows,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Qustion number and the question
+        Text(
+          'Soru $questionNo:',
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: AppColors.primary,
+              ),
+        ),
+        const SizedBox(
+          height: kInBetweenSpacing / 2,
+        ),
+        Text(
+          question,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(
+            top: kVericalPadding,
+          ),
+          padding: const EdgeInsets.symmetric(
+            vertical: kVericalPadding,
+            horizontal: kHorizontalPadding,
+          ),
+          decoration: BoxDecoration(
+            color: isCorrect ? AppColors.greenLow : AppColors.redLow,
+            borderRadius: BorderRadius.circular(kCardBorderRadius),
+            boxShadow: AppShadows.smallCardShadows,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                leadingLetter,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(
+                width: kInBetweenSpacing,
+              ),
+              Flexible(
+                child: Text(
+                  answer,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
