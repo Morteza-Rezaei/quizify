@@ -1,13 +1,13 @@
 class QuizOptions {
+  final String subject;
   final List<String> selectedTopics;
-  final String timer;
   final String level;
   final String quizNumber;
   final String quizType;
 
   QuizOptions({
+    required this.subject,
     required this.selectedTopics,
-    required this.timer,
     required this.level,
     required this.quizNumber,
     required this.quizType,
@@ -15,11 +15,11 @@ class QuizOptions {
 
   Map<String, dynamic> toJson() {
     return {
-      'selectedTopics': selectedTopics,
-      'timer': timer,
-      'level': level,
-      'quizNumber': quizNumber,
-      'quizType': quizType,
+      'Ders': subject,
+      'Seçilen Konular': selectedTopics,
+      'Zorluk Seviyesi': level,
+      'Soru Sayısı': quizNumber,
+      'Soru Türü': quizType,
     };
   }
 }

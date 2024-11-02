@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/paths/quiz_path.dart';
 import 'package:quizify/constants/values/strings/quiz_text.dart';
+import 'package:quizify/data/models/quiz_model.dart';
 import 'package:quizify/data/models/quiz_options.dart';
 import 'package:quizify/data/models/subject_model.dart';
+import 'package:quizify/data/service/quiz_service.dart';
+import 'package:quizify/screens/quiz/quiz_screen_start.dart';
 import 'package:quizify/widgets/app_widgets.dart';
 import 'package:quizify/widgets/quiz_widgets.dart';
 
@@ -200,12 +205,8 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
                 onPressed: () async {
                   // Create the QuizOptions object
                   QuizOptions quizOptions = QuizOptions(
+                    subject: widget.subject.name,
                     selectedTopics: widget.selectedTopics,
-                    timer: _getSelectedOptionText([
-                      QuizText.timerOption1,
-                      QuizText.timerOption2,
-                      QuizText.timerOption3
-                    ], _selectedTimerIndex),
                     level: _getSelectedOptionText([
                       QuizText.levelOption1,
                       QuizText.levelOption2,
@@ -224,15 +225,14 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
                     ], _selectedQuizTypeIndex),
                   );
 
-                  await generateQuiz(quizOptions);
-
-                  // Quiz quiz = await fetchQuizData();
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => QuizScreenStartScreen(quiz: quiz),
-                  //   ),
-                  // );
+                  Quiz quiz = await fetchQuizData(quizOptions);
+                  print(jsonEncode(quiz));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizScreenStartScreen(quiz: quiz),
+                    ),
+                  );
                 },
                 child: const Text(
                   QuizText.selectSubjectButton,
@@ -244,9 +244,4 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
       ),
     );
   }
-}
-
-Future generateQuiz(QuizOptions quizOptions) async {
-  // for now, just print the options
-  print(quizOptions.toJson());
 }

@@ -8,10 +8,24 @@ class QuizQuestion {
     required this.answers,
     required this.correctAnswerIndex,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'question': question,
+      'answers': answers,
+      'correctAnswerIndex': correctAnswerIndex,
+    };
+  }
 }
 
 class Quiz {
   final List<QuizQuestion> questions;
 
   Quiz({required this.questions});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'questions': questions.map((question) => question.toJson()).toList(),
+    };
+  }
 }
