@@ -65,7 +65,7 @@ class _ForgotPaswordScreenState extends State<ForgotPaswordScreen> {
                             fieldType: 'email',
                             hintText: ForgotPasswordText.labelEmail,
                             keyboardType: TextInputType.emailAddress,
-                            onSaved: (value) {
+                            onChanged: (value) {
                               context
                                   .read<ForgotPasswordBlocs>()
                                   .add(EmailEvent(value));

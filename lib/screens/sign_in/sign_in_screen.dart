@@ -59,7 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             fieldType: 'email',
                             hintText: SignInText.labelEmail,
                             keyboardType: TextInputType.emailAddress,
-                            onSaved: (value) {
+                            onChanged: (value) {
                               context.read<SignInBloc>().add(EmailEvent(value));
                             },
                           ),
@@ -69,7 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             fieldType: 'password',
                             hintText: SignInText.labelPassword,
                             obscureText: true,
-                            onSaved: (value) {
+                            onChanged: (value) {
                               context
                                   .read<SignInBloc>()
                                   .add(PasswordEvent(value));

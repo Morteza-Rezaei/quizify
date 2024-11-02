@@ -4,11 +4,17 @@ import 'package:quizify/blocs/sign_up_blocs/sign_up_states.dart';
 
 class SignUpBlocs extends Bloc<SignUpEvent, SignUpStates> {
   SignUpBlocs() : super(const SignUpStates()) {
+    on<UserAvatarEvent>(_userAvatarEvent);
     on<UserNameEvent>(_userNameEvent);
     on<EmailEvent>(_emailEvent);
     on<PasswordEvent>(_passwordEvent);
     on<ConfirmPasswordEvent>(_confirmPasswordEvent);
     on<ResetSignUpEvent>(_resetEvent);
+    on<LoadingEvent>(_toggleLoadingEvent);
+  }
+
+  void _userAvatarEvent(UserAvatarEvent event, Emitter<SignUpStates> emit) {
+    emit(state.copyWith(userAvatar: event.userAvatar));
   }
 
   void _userNameEvent(UserNameEvent event, Emitter<SignUpStates> emit) {
@@ -30,5 +36,9 @@ class SignUpBlocs extends Bloc<SignUpEvent, SignUpStates> {
 
   void _resetEvent(ResetSignUpEvent event, Emitter<SignUpStates> emit) {
     emit(const SignUpStates());
+  }
+
+  void _toggleLoadingEvent(LoadingEvent event, Emitter<SignUpStates> emit) {
+    emit(state.copyWith(isLoading: event.isLoading));
   }
 }

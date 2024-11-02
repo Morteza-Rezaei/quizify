@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
+import 'package:quizify/constants/values/strings/sign_up_text.dart';
 
 // auth screen title image
 Widget authScreenTitleImage({
@@ -58,11 +59,14 @@ Widget authScreenTextFormField({
   required String hintText,
   TextInputType keyboardType = TextInputType.text,
   bool obscureText = false,
-  required void Function(String value) onSaved,
+  required void Function(String value) onChanged,
+  // a nullable controller
+  TextEditingController? controller,
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: kInBetweenSpacing),
     child: TextFormField(
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
       decoration: InputDecoration(
@@ -70,29 +74,29 @@ Widget authScreenTextFormField({
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'This field cannot be empty';
+          return SignUpText.canNotbeEmpty;
         } else if (fieldType == 'email') {
           if (!value.contains('@')) {
-            return 'Please enter a valid email';
+            return SignUpText.invalidEmail;
           }
           if (!value.contains('.')) {
-            return 'Please enter a valid email';
+            return SignUpText.invalidEmail;
           }
         } else if (fieldType == 'password') {
           if (value.length < 6) {
-            return 'Password must be at least 6 characters long';
+            return SignUpText.invalidPassword;
           }
           // must contain at least one number and character
           if (!value.contains(RegExp(r'[0-9]'))) {
-            return 'Password must contain at least one number';
+            return SignUpText.invalidPasswordNumber;
           }
           if (!value.contains(RegExp(r'[a-zA-Z]'))) {
-            return 'Password must contain at least one character';
+            return SignUpText.invalidPasswordCharacter;
           }
         }
         return null;
       },
-      onSaved: (value) => onSaved(value!),
+      onChanged: (value) => onChanged(value),
     ),
   );
 }

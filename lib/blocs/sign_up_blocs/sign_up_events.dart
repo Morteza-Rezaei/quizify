@@ -2,6 +2,11 @@ abstract class SignUpEvent {
   const SignUpEvent();
 }
 
+class UserAvatarEvent extends SignUpEvent {
+  final String userAvatar;
+  UserAvatarEvent(this.userAvatar);
+}
+
 class UserNameEvent extends SignUpEvent {
   final String userName;
   UserNameEvent(this.userName);
@@ -23,3 +28,8 @@ class ConfirmPasswordEvent extends SignUpEvent {
 }
 
 class ResetSignUpEvent extends SignUpEvent {}
+
+class LoadingEvent extends SignUpEvent {
+  final bool isLoading;
+  LoadingEvent(this.isLoading);
+}
