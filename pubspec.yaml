@@ -40,7 +40,6 @@ dependencies:
   google_fonts: ^6.2.1
   dots_indicator: ^3.0.0
   shared_preferences: ^2.3.2
-  toggle_switch: ^2.3.0
 
 dev_dependencies:
   flutter_test:

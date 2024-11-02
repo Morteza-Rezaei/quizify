@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
     appId: '1:546652664710:android:dfcb2dd4dbdc023dedb207',
     messagingSenderId: '546652664710',
     projectId: 'quizify-42624',
-    storageBucket: 'quizify-42624.appspot.com',
+    storageBucket: 'quizify-42624.firebasestorage.app',
   );
 
 }
