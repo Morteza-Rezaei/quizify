@@ -3,17 +3,22 @@ import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/paths/quiz_path.dart';
 import 'package:quizify/constants/values/strings/quiz_text.dart';
 import 'package:quizify/data/models/quiz_model.dart';
+import 'package:quizify/screens/home/home_screen.dart';
+import 'package:quizify/screens/quiz/quiz_screen_start.dart';
 import 'package:quizify/widgets/quiz_widgets.dart';
+import 'package:share_plus/share_plus.dart';
 
 class QuizResultScreen extends StatefulWidget {
   const QuizResultScreen({
     super.key,
     required this.quiz,
     required this.userAnswers,
+    required this.timerDuration,
   });
 
   final Quiz quiz;
   final List<int> userAnswers;
+  final Duration timerDuration;
 
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
@@ -118,13 +123,60 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               isActive: -1,
               imagePath1: QuizPath.share,
               title1: QuizText.resultShareButton,
-              onTap1: () {},
+              onTap1: () {
+                // for now we just simply share the results as text
+                final StringBuffer shareContent = StringBuffer();
+                shareContent.writeln('Merhaba! 🎉');
+                shareContent.writeln(
+                    '🚀Quizify uygulaması ile çözdüğüm quiz sonucunu paylaşıyorum. 🚀');
+                shareContent.writeln('👐 Quiz Soncum 👐');
+                shareContent.writeln('Toplam Skor: $score / 100 🎯');
+                shareContent
+                    .writeln('Bildiğin Soruların Sayısı: $correctAnswers 😎');
+                shareContent
+                    .writeln('Bilemediğin Soruların Sayısı: $wrongAnswers 😢');
+                shareContent.writeln('\n👇 Sorular ve Cevaplar 👇\n');
+                for (int i = 0; i < widget.quiz.questions.length; i++) {
+                  final question = widget.quiz.questions[i];
+                  final userAnswer = widget.userAnswers[i];
+                  final isCorrect = question.correctAnswerIndex == userAnswer;
+                  shareContent.writeln('Soru ${i + 1}: ${question.question}');
+                  shareContent.writeln(
+                      'Benim Cevabın: ${question.answers[userAnswer]}');
+                  shareContent.writeln(
+                      'Doğru Cevap: ${question.answers[question.correctAnswerIndex]}');
+                  shareContent
+                      .writeln('Sonuç: ${isCorrect ? 'Doğru' : 'Yanlış'}');
+                  shareContent.writeln(
+                      ''); // Boş bir satır ekleyerek sorular arasında boşluk bırakıyoruz
+                }
+                Share.share(shareContent.toString());
+              },
               imagePath2: QuizPath.tryAgain,
               title2: QuizText.resultRetryButton,
-              onTap2: () {},
+              onTap2: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QuizScreenStartScreen(
+                      quiz: widget.quiz,
+                      timerDuration: widget.timerDuration,
+                    ),
+                  ),
+                );
+              },
               imagePath3: QuizPath.home,
               title3: QuizText.resultHomeButton,
-              onTap3: () {},
+              onTap3: () {
+                // go to the home screen
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
             ),
             const SizedBox(
               height: kVericalPadding * 2,

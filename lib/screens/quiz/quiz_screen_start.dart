@@ -72,6 +72,7 @@ class _QuizScreenStartScreenState extends State<QuizScreenStartScreen> {
             builder: (context) => QuizResultScreen(
               quiz: widget.quiz,
               userAnswers: userAnswers,
+              timerDuration: widget.timerDuration,
             ),
           ),
         );
@@ -201,6 +202,7 @@ class _QuizScreenStartScreenState extends State<QuizScreenStartScreen> {
                       return QuizResultScreen(
                         quiz: widget.quiz,
                         userAnswers: userAnswers,
+                        timerDuration: widget.timerDuration,
                       );
                     }));
                   }
