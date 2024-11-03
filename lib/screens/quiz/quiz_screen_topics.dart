@@ -67,13 +67,8 @@ class _QuizScreenTopicsScreenState extends State<QuizScreenTopicsScreen> {
                 onPressed: () {
                   // show a snackbar if no topic is selected
                   if (selectedTopics.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          QuizText.selectSubjectError,
-                        ),
-                      ),
-                    );
+                    showSnackBar(
+                        context: context, text: QuizText.selectSubjectError);
                     return;
                   }
                   // navigate and pass the selected topics

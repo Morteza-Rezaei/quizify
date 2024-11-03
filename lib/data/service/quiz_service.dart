@@ -1,21 +1,41 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:quizify/constants/values/paths/quiz_path.dart';
+import 'package:quizify/constants/values/strings/quiz_text.dart';
 import 'package:quizify/data/models/quiz_model.dart';
 import 'package:quizify/data/models/quiz_options.dart';
+import 'package:quizify/widgets/quiz_widgets.dart';
 
-Future<Quiz> fetchQuizData(QuizOptions quizOptions) async {
-  final generatedQuizJson = await generateQuiz(quizOptions);
-  final List<dynamic> questionsJson = jsonDecode(generatedQuizJson);
-  final List<QuizQuestion> questions = questionsJson.map((questionJson) {
-    return QuizQuestion(
-      question: questionJson['question'],
-      answers: List<String>.from(questionJson['answers']),
-      correctAnswerIndex: questionJson['correctAnswerIndex'],
+Future<Quiz> fetchQuizData(
+    QuizOptions quizOptions, BuildContext context) async {
+  try {
+    final generatedQuizJson = await generateQuiz(quizOptions);
+    final List<dynamic> questionsJson = jsonDecode(generatedQuizJson);
+    final List<QuizQuestion> questions = questionsJson.map((questionJson) {
+      return QuizQuestion(
+        question: questionJson['question'],
+        answers: List<String>.from(questionJson['answers']),
+        correctAnswerIndex: questionJson['correctAnswerIndex'],
+      );
+    }).toList();
+
+    return Quiz(questions: questions);
+  } catch (e) {
+    //print("fetchQuizData error: $e");
+    quizWarningAlertDialog(
+      context: context,
+      imagePath: QuizPath.error,
+      title: QuizText.quizError,
+      content: QuizText.quizErrorMessage,
+      filledBtnName: QuizText.quizErrorButton,
+      onFilledBtnPressed: () {},
     );
-  }).toList();
-
-  return Quiz(questions: questions);
+    throw Exception("fetchQuizData error: $e");
+  }
 }
 
 Future<String> generateQuiz(QuizOptions quizOptions) async {
@@ -50,6 +70,8 @@ Future<String> generateQuiz(QuizOptions quizOptions) async {
       TextPart(prompt),
     ])
   ]);
+
+  print("response: ${response.text}");
 
   return response.text!;
 }

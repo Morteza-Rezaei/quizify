@@ -42,6 +42,8 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
     return selectedIndex >= 0 ? options[selectedIndex] : '';
   }
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,63 +205,129 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
               padding: const EdgeInsets.symmetric(
                 vertical: kVericalPadding,
               ),
-              child: ElevatedButton(
-                onPressed: () async {
-                  // Create the QuizOptions object
-                  QuizOptions quizOptions = QuizOptions(
-                    subject: widget.subject.name,
-                    selectedTopics: widget.selectedTopics,
-                    level: _getSelectedOptionText([
-                      QuizText.levelOption1,
-                      QuizText.levelOption2,
-                      QuizText.levelOption3
-                    ], _selectedLevelIndex),
-                    quizNumber: _getSelectedOptionText([
-                      QuizText.quizNumberOption1,
-                      QuizText.quizNumberOption2,
-                      QuizText.quizNumberOption3,
-                      QuizText.quizNumberOption4
-                    ], _selectedQuizNumberIndex),
-                    quizType: _getSelectedOptionText([
-                      QuizText.quizTypeOption1,
-                      QuizText.quizTypeOption2,
-                      QuizText.quizTypeOption3
-                    ], _selectedQuizTypeIndex),
-                  );
+              child: _isLoading
+                  ? loadingMini()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        if (_selectedTimerIndex == -1) {
+                          showSnackBar(
+                            context: context,
+                            text: QuizText.timerError,
+                          );
+                          return;
+                        }
+                        if (_selectedLevelIndex == -1) {
+                          showSnackBar(
+                            context: context,
+                            text: QuizText.levelError,
+                          );
+                          return;
+                        }
+                        if (_selectedQuizNumberIndex == -1) {
+                          showSnackBar(
+                            context: context,
+                            text: QuizText.quizNumberError,
+                          );
+                          return;
+                        }
+                        if (_selectedQuizTypeIndex == -1) {
+                          showSnackBar(
+                            context: context,
+                            text: QuizText.quizTypeError,
+                          );
+                          return;
+                        } else {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          // now we have all the quiz options and ready to create the quiz via gemini :)
 
-                  Quiz quiz = await fetchQuizData(quizOptions);
-                  print(jsonEncode(quiz));
+                          // Create the QuizOptions object
+                          QuizOptions quizOptions = QuizOptions(
+                            subject: widget.subject.name,
+                            selectedTopics: widget.selectedTopics,
+                            level: _getSelectedOptionText([
+                              QuizText.levelOption1,
+                              QuizText.levelOption2,
+                              QuizText.levelOption3
+                            ], _selectedLevelIndex),
+                            quizNumber: _getSelectedOptionText([
+                              QuizText.quizNumberOption1,
+                              QuizText.quizNumberOption2,
+                              QuizText.quizNumberOption3,
+                              QuizText.quizNumberOption4
+                            ], _selectedQuizNumberIndex),
+                            quizType: _getSelectedOptionText([
+                              QuizText.quizTypeOption1,
+                              QuizText.quizTypeOption2,
+                              QuizText.quizTypeOption3
+                            ], _selectedQuizTypeIndex),
+                          );
 
-                  // the timer selection
-                  Duration selectedDuration;
-                  switch (_selectedTimerIndex) {
-                    case 0:
-                      selectedDuration = const Duration(minutes: 5);
-                      break;
-                    case 1:
-                      selectedDuration = const Duration(minutes: 10);
-                      break;
-                    case 2:
-                      selectedDuration = const Duration(minutes: 15);
-                      break;
-                    default:
-                      selectedDuration = const Duration(minutes: 1);
-                  }
+                          try {
+                            Quiz quiz = await fetchQuizData(
+                              quizOptions,
+                              context,
+                            );
+                            print(jsonEncode(quiz));
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuizScreenStartScreen(
-                        quiz: quiz,
-                        timerDuration: selectedDuration,
+                            // // if there is an error, show the error dialog and on submit try again
+                            // quizWarningAlertDialog(
+                            //   context: context,
+                            //   imagePath: QuizPath.error,
+                            //   title: QuizText.quizError,
+                            //   content: QuizText.quizErrorMessage,
+                            //   filledBtnName: QuizText.quizErrorButton,
+                            //   onFilledBtnPressed: () {},
+                            // );
+
+                            // the timer selection
+                            Duration selectedDuration;
+                            switch (_selectedTimerIndex) {
+                              case 0:
+                                selectedDuration = const Duration(minutes: 5);
+                                break;
+                              case 1:
+                                selectedDuration = const Duration(minutes: 10);
+                                break;
+                              case 2:
+                                selectedDuration = const Duration(minutes: 15);
+                                break;
+                              // although it is not possible to reach here, we set a default value
+                              default:
+                                selectedDuration = const Duration(minutes: 60);
+                            }
+
+                            setState(() {
+                              _isLoading = false;
+                            });
+
+                            // Todo: Navigate to the quiz screen and remove the route from the stack
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => QuizScreenStartScreen(
+                                  quiz: quiz,
+                                  timerDuration: selectedDuration,
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            setState(() {
+                              _isLoading = false;
+                            });
+
+                            // print(
+                            //     "fetchQuizData error from setting screen: $e");
+                            throw Exception(
+                                "fetchQuizData error from setting screen: $e");
+                          }
+                        }
+                      },
+                      child: const Text(
+                        QuizText.selectSubjectButton,
                       ),
                     ),
-                  );
-                },
-                child: const Text(
-                  QuizText.selectSubjectButton,
-                ),
-              ),
             ),
           ],
         ),

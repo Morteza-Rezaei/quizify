@@ -510,3 +510,74 @@ Widget resultCard({
     ),
   );
 }
+
+// warning alert dialog  for the quiz
+Future<void> quizWarningAlertDialog({
+  required BuildContext context,
+  required String imagePath,
+  required String title,
+  required String content,
+  required String filledBtnName,
+  required void Function() onFilledBtnPressed,
+}) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(kCardBorderRadius * 3),
+        ),
+        title: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                top: kVericalPadding * 2,
+                bottom: kVericalPadding * 2,
+              ),
+              child: Image.asset(
+                imagePath,
+                width: 80,
+                height: 80,
+              ),
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: AppColors.primary50,
+                  ),
+            ),
+          ],
+        ),
+        content: Text(
+          content,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: AppColors.neutral50,
+              ),
+          textAlign: TextAlign.center,
+        ),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: kHorizontalPadding,
+                  vertical: kInBetweenSpacing,
+                ),
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    onFilledBtnPressed();
+                  },
+                  child: Text(filledBtnName),
+                ),
+              ),
+            ],
+          )
+        ],
+      );
+    },
+  );
+}

@@ -17,4 +17,7 @@ class QuizPath {
   static const String share = "assets/images/share.png";
   static const String tryAgain = "assets/images/try_again.png";
   static const String home = "assets/images/home.png";
+
+  // error images
+  static const String error = "assets/images/dizzy-robot.png";
 }

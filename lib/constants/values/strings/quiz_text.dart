@@ -1,4 +1,14 @@
 class QuizText {
+  // error messages
+  static const String quizError = "Bir hata oluştu!";
+  static const String quizErrorMessage =
+      "Quiz oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.";
+  static const String quizErrorButton = "Tamam";
+  static const String timerError = "Lütfen bir zamanlayıcı seçin!";
+  static const String levelError = "Lütfen bir zorluk seviyesi seçin!";
+  static const String quizNumberError = "Lütfen soru sayısı seçin!";
+  static const String quizTypeError = "Lütfen bir quiz türü seçin!";
+
   static const String selectSubjectDescription =
       "İstediğiniz konuları seçin quiz hazırlamaya başlayın!";
   static const String selectSubjectButton = "Devam Et";
@@ -23,10 +33,10 @@ class QuizText {
 
   // quiz number
   static const String quizNumberTitle = "Soru Sayısı";
-  static const String quizNumberOption1 = "1";
-  static const String quizNumberOption2 = "3";
+  static const String quizNumberOption1 = "2";
+  static const String quizNumberOption2 = "4";
   static const String quizNumberOption3 = "6";
-  static const String quizNumberOption4 = "9";
+  static const String quizNumberOption4 = "8";
 
   // quiz type
   static const String quizTypeTitle = "Quiz Türü";
