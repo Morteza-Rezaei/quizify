@@ -47,22 +47,47 @@ Future<String> generateQuiz(QuizOptions quizOptions) async {
     ),
   );
 
-  final prompt = """${quizOptions.quizNumber} tane quiz sorusu oluşturun.
+  final prompt = """
+  ${quizOptions.quizNumber} tane quiz sorusu oluşturun.
   Ders: ${quizOptions.subject},
   Seçilen Konular: ${quizOptions.selectedTopics},
   Zorluk Seviyesi: ${quizOptions.level},
   Soru Türü: ${quizOptions.quizType},
 
-  oluşturulacak sorular aşağıdaki json formatında olmalıdır:
-  Örnek:
+  Çıktı formatı:
+  Her soru aşağıdaki JSON formatında olmalıdır:
   {
     "question": string,
     "answers": list[string],
     "correctAnswerIndex": int
   }
-  question: soru metni string tipinde olmalıdır.
-  answers: sorunun cevapları string listesi olmalıdır ve Soru Türüne göre kaç adet olacağı belirlenir. ve listedeki ilk elemanın indexi 0'dır.
-  correctAnswerIndex: doğru cevabın indexi olmalıdır ve integer tipinde olmalıdır. bu index answers listesindeki doğru cevabı belirtir. ve 0'dan başlar.
+
+  Kurallar:
+  1. Sorular ${quizOptions.quizType} formatına uygun olmalı, yani ${quizOptions.quizType} türüne göre doğru cevap sayısını belirleyin.
+  2. "question": değeri string tipinde bir soru cümlesi olmalı.
+  3. "answers": sorunun cevapları string tipinde bir liste olmalı. Cevap sayısı ${quizOptions.quizType} türüne göre değişebilir. ve listedeki ilk elemanın indexi 0'dır.
+  4. "correctAnswerIndex" değeri bir tam sayı olmalı ve "answers" listesindeki doğru cevabın indexini belirtmelidir. Index 0'dan başlar.
+  
+  Örnek:
+  girdiler:
+  ${quizOptions.quizNumber} = 2
+  ${quizOptions.subject} = "Matematik"
+  ${quizOptions.selectedTopics} = ["Toplama", "Çıkarma"]
+  ${quizOptions.level} = "Orta"
+  ${quizOptions.quizType} = "Test (4 şık)"
+  çıktı:
+  [
+    {
+      "question": "2 + 2 kaçtır?",
+      "answers": ["3", "4", "5", "6"],
+      "correctAnswerIndex": 1
+    },
+    {
+      "question": "5 - 3 kaçtır?",
+      "answers": ["2", "3", "4", "5"],
+      "correctAnswerIndex": 0
+    }
+  ]
   """;
 
   final response = await model.generateContent([

@@ -269,7 +269,7 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
                               quizOptions,
                               context,
                             );
-                            //print(jsonEncode(quiz));
+                            (jsonEncode(quiz));
 
                             // the timer selection
                             Duration selectedDuration;
