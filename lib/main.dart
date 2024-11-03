@@ -51,10 +51,10 @@ class MyApp extends StatelessWidget {
       initialScreen = const LandingScreen();
     } else if (isLoggedIn) {
       // If the user is logged in, go to the app home screen
-      initialScreen = const LandingScreen();
+      initialScreen = const HomeScreen();
     } else {
       // If the user is not logged in, go to the sign-in screen
-      initialScreen = const LandingScreen();
+      initialScreen = const SignInScreen();
     }
 
     return MultiBlocProvider(

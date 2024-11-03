@@ -60,8 +60,7 @@ Widget authScreenTextFormField({
   TextInputType keyboardType = TextInputType.text,
   bool obscureText = false,
   required void Function(String value) onChanged,
-  // a nullable controller
-  TextEditingController? controller,
+  required TextEditingController? controller,
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: kInBetweenSpacing),

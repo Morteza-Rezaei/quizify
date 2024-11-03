@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/border_radius.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
@@ -5,8 +6,21 @@ import 'package:quizify/constants/values/colors/app_colors.dart';
 import 'package:quizify/constants/values/paths/home_paths.dart';
 import 'package:quizify/constants/values/strings/home_text.dart';
 import 'package:quizify/data/models/subject_model.dart';
+import 'package:quizify/data/service/storage_constants.dart';
+import 'package:quizify/global.dart';
 import 'package:quizify/screens/quiz/quiz_screen_topics.dart';
+import 'package:quizify/screens/sign_in/sign_in_screen.dart';
 import 'package:quizify/widgets/shadow_widgets.dart';
+
+// sign out Function
+Future<void> _signOut() async {
+  // sign out the user
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  await auth.signOut();
+
+  // remove the user token from the storage
+  Global.storageService.remove(StorageConstants.userToken);
+}
 
 // the header Widgets for the home screen
 Widget homeScreenHeader({
@@ -42,6 +56,31 @@ Widget homeScreenHeader({
             GestureDetector(
               onTap: () {
                 // Todo: navigate to the profile screen
+                // show a sign out dialog box and a sign out button inside
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        title: const Text('Sign Out'),
+                        content:
+                            const Text('Are you sure you want to sign out?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignInScreen(),
+                                ),
+                                (route) => false,
+                              );
+                              _signOut();
+                            },
+                            child: const Text('Sign Out'),
+                          ),
+                        ]);
+                  },
+                );
               },
               child: const CircleAvatar(
                 radius: kDefaultPadding * 2,

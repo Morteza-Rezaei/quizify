@@ -20,6 +20,16 @@ class _ForgotPaswordScreenState extends State<ForgotPaswordScreen> {
   // the form key
   final _formKey = GlobalKey<FormState>();
 
+  // TextEditingControllers for each text field
+  // for saving the user input after showing loading screen
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ForgotPasswordBlocs, ForgotPasswordStates>(
@@ -62,6 +72,7 @@ class _ForgotPaswordScreenState extends State<ForgotPaswordScreen> {
 
                           //Email TextFormField
                           authScreenTextFormField(
+                            controller: _emailController,
                             fieldType: 'email',
                             hintText: ForgotPasswordText.labelEmail,
                             keyboardType: TextInputType.emailAddress,
