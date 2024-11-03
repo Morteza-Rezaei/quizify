@@ -269,17 +269,7 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
                               quizOptions,
                               context,
                             );
-                            print(jsonEncode(quiz));
-
-                            // // if there is an error, show the error dialog and on submit try again
-                            // quizWarningAlertDialog(
-                            //   context: context,
-                            //   imagePath: QuizPath.error,
-                            //   title: QuizText.quizError,
-                            //   content: QuizText.quizErrorMessage,
-                            //   filledBtnName: QuizText.quizErrorButton,
-                            //   onFilledBtnPressed: () {},
-                            // );
+                            //print(jsonEncode(quiz));
 
                             // the timer selection
                             Duration selectedDuration;

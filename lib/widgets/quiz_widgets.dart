@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/border_radius.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
+import 'package:quizify/constants/values/paths/home_paths.dart';
 import 'package:quizify/constants/values/strings/quiz_text.dart';
+import 'package:quizify/screens/home/home_screen.dart';
+import 'package:quizify/widgets/app_widgets.dart';
 import 'package:quizify/widgets/shadow_widgets.dart';
 
 // the header of the quiz pages
@@ -577,6 +580,37 @@ Future<void> quizWarningAlertDialog({
             ],
           )
         ],
+      );
+    },
+  );
+}
+
+// app exit button widget
+Widget exitButton(
+  context,
+) {
+  return IconButton(
+    icon: const Icon(Icons.close_rounded),
+    onPressed: () {
+      // show the warning dialog
+      warningAlertDialog(
+        context: context,
+        imagePath: HomePaths.signOut,
+        title: QuizText.exitQuizTitle,
+        content: QuizText.exitQuizContent,
+        filledBtnName: QuizText.exitQuizCancel,
+        outLinedBtnName: QuizText.exitQuizExit,
+        onOutlinedBtnPressed: () {},
+        onFilledBtnPressed: () {
+          // go back to the home screen and clear the stack
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+            (route) => false,
+          );
+        },
       );
     },
   );

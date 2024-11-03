@@ -1,4 +1,11 @@
 class QuizText {
+  // exit quiz dialog
+  static const String exitQuizTitle = "Quiz'i İptal Et";
+  static const String exitQuizContent =
+      "Quiz'i iptal etmek istediğinize emin misiniz? İlerleme kaydedilmeyecek.";
+  static const String exitQuizCancel = "Evet , Çıkış Yap";
+  static const String exitQuizExit = "Hayır, Devam Et";
+
   // error messages
   static const String quizError = "Bir hata oluştu!";
   static const String quizErrorMessage =
