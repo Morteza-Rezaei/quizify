@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -227,10 +229,30 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
 
                   Quiz quiz = await fetchQuizData(quizOptions);
                   print(jsonEncode(quiz));
+
+                  // the timer selection
+                  Duration selectedDuration;
+                  switch (_selectedTimerIndex) {
+                    case 0:
+                      selectedDuration = const Duration(minutes: 5);
+                      break;
+                    case 1:
+                      selectedDuration = const Duration(minutes: 10);
+                      break;
+                    case 2:
+                      selectedDuration = const Duration(minutes: 15);
+                      break;
+                    default:
+                      selectedDuration = const Duration(minutes: 1);
+                  }
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QuizScreenStartScreen(quiz: quiz),
+                      builder: (context) => QuizScreenStartScreen(
+                        quiz: quiz,
+                        timerDuration: selectedDuration,
+                      ),
                     ),
                   );
                 },

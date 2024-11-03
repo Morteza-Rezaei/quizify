@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/border_radius.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
@@ -8,9 +10,15 @@ import 'package:quizify/widgets/app_widgets.dart';
 import 'package:quizify/widgets/quiz_widgets.dart';
 
 class QuizScreenStartScreen extends StatefulWidget {
-  const QuizScreenStartScreen({super.key, required this.quiz});
+  const QuizScreenStartScreen({
+    super.key,
+    required this.quiz,
+    required this.timerDuration,
+  });
 
   final Quiz quiz;
+  final Duration timerDuration;
+
   @override
   State<QuizScreenStartScreen> createState() => _QuizScreenStartScreenState();
 }
@@ -19,6 +27,67 @@ class _QuizScreenStartScreenState extends State<QuizScreenStartScreen> {
   int soruNo = 0;
   int selectedAnswer = -1;
   List<int> userAnswers = [];
+
+  late Timer _timer;
+  late Duration _remainingTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _remainingTime = widget.timerDuration;
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingTime.inSeconds > 0) {
+        setState(() {
+          _remainingTime = _remainingTime - const Duration(seconds: 1);
+        });
+      } else {
+        _timer.cancel();
+        _showTimeUpDialog();
+      }
+    });
+  }
+
+  void _showTimeUpDialog() {
+    // Assign -1 to the remaining questions
+    for (int i = userAnswers.length; i < widget.quiz.questions.length; i++) {
+      userAnswers.add(-1);
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Süre Doldu'),
+        content: const Text('Süreniz doldu. Sonuçlarınızı görebilirsiniz.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuizResultScreen(
+                    quiz: widget.quiz,
+                    userAnswers: userAnswers,
+                  ),
+                ),
+              );
+            },
+            child: const Text('Tamam'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +125,17 @@ class _QuizScreenStartScreenState extends State<QuizScreenStartScreen> {
           ],
         ),
         actions: [
+          //timer icon
+          const Icon(
+            Icons.timer_outlined,
+            color: AppColors.red,
+          ),
           Padding(
             padding: const EdgeInsets.only(
               right: kHorizontalPadding,
             ),
             child: Text(
-              '00:00',
+              '${_remainingTime.inMinutes.toString().padLeft(2, '0')}:${(_remainingTime.inSeconds % 60).toString().padLeft(2, '0')}',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: AppColors.red,
                   ),
