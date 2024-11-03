@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quizify/constants/padding_and_border/border_radius.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
@@ -18,7 +19,12 @@ import 'package:quizify/widgets/shadow_widgets.dart';
 Future<void> _signOut() async {
   // sign out the user
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
   await auth.signOut();
+  if (await googleSignIn.isSignedIn()) {
+    googleSignIn.signOut();
+  }
 
   // remove the user token from the storage
   Global.storageService.remove(StorageConstants.userToken);

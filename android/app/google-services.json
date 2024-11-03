@@ -12,7 +12,20 @@
           "package_name": "com.quizify.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "546652664710-bg020jm8ab68io0g69402cir816upcgk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizify.app",
+            "certificate_hash": "298a772d275786bfbf453b539527d94c288bb343"
+          }
+        },
+        {
+          "client_id": "546652664710-59frv2vfn00oo0r8bqt3c368iif7voca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDu0UniTo-W_DiTW0Tq7W0OyuQQi1aAdnM"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546652664710-59frv2vfn00oo0r8bqt3c368iif7voca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

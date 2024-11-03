@@ -1,7 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
+import 'package:quizify/constants/values/strings/sign_in_text.dart';
 import 'package:quizify/constants/values/strings/sign_up_text.dart';
+import 'package:quizify/data/service/google_sign_in.dart';
+import 'package:quizify/data/service/storage_constants.dart';
+import 'package:quizify/global.dart';
+import 'package:quizify/screens/home/home_screen.dart';
+import 'package:quizify/widgets/app_widgets.dart';
 
 // auth screen title image
 Widget authScreenTitleImage({
@@ -144,8 +152,32 @@ Widget googleSignInButton({
   required String iconPath,
 }) {
   return OutlinedButton.icon(
-    onPressed: () {
-      // TODO: Implement Google Sign In
+    onPressed: () async {
+      // handle google sign in
+      final userCredential = await googleSignIn(context);
+      if (userCredential != null) {
+        final user = userCredential.user!;
+        // setting the storage user key to the user's uid
+        Global.storageService.setString(StorageConstants.userToken, user.uid);
+
+        showSnackBar(
+          context: context,
+          text: SignInText.signInSuccess,
+        );
+        // navigate to the home screen
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+          (route) => false,
+        );
+      } else {
+        showSnackBar(
+          context: context,
+          text: SignInText.signInError,
+        );
+      }
     },
     icon: Image(
       image: AssetImage(iconPath),
