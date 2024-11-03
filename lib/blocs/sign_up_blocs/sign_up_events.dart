@@ -29,7 +29,7 @@ class ConfirmPasswordEvent extends SignUpEvent {
 
 class ResetSignUpEvent extends SignUpEvent {}
 
-class LoadingEvent extends SignUpEvent {
+class SignUpLoadingEvent extends SignUpEvent {
   final bool isLoading;
-  LoadingEvent(this.isLoading);
+  SignUpLoadingEvent(this.isLoading);
 }

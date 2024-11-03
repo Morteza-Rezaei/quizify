@@ -10,7 +10,7 @@ class SignUpBlocs extends Bloc<SignUpEvent, SignUpStates> {
     on<PasswordEvent>(_passwordEvent);
     on<ConfirmPasswordEvent>(_confirmPasswordEvent);
     on<ResetSignUpEvent>(_resetEvent);
-    on<LoadingEvent>(_toggleLoadingEvent);
+    on<SignUpLoadingEvent>(_toggleLoadingEvent);
   }
 
   void _userAvatarEvent(UserAvatarEvent event, Emitter<SignUpStates> emit) {
@@ -38,7 +38,8 @@ class SignUpBlocs extends Bloc<SignUpEvent, SignUpStates> {
     emit(const SignUpStates());
   }
 
-  void _toggleLoadingEvent(LoadingEvent event, Emitter<SignUpStates> emit) {
+  void _toggleLoadingEvent(
+      SignUpLoadingEvent event, Emitter<SignUpStates> emit) {
     emit(state.copyWith(isLoading: event.isLoading));
   }
 }

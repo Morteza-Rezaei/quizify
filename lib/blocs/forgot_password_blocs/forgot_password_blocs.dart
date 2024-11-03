@@ -7,6 +7,7 @@ class ForgotPasswordBlocs
   ForgotPasswordBlocs() : super(const ForgotPasswordStates()) {
     on<EmailEvent>(_emailEvent);
     on<ResetForgotPasswordEvent>(_resetEvent);
+    on<ForgotPasswordLoadingEvent>(_toggleLoadingEvent);
   }
 
   void _emailEvent(EmailEvent event, Emitter<ForgotPasswordStates> emit) {
@@ -16,5 +17,10 @@ class ForgotPasswordBlocs
   void _resetEvent(
       ResetForgotPasswordEvent event, Emitter<ForgotPasswordStates> emit) {
     emit(const ForgotPasswordStates());
+  }
+
+  void _toggleLoadingEvent(
+      ForgotPasswordLoadingEvent event, Emitter<ForgotPasswordStates> emit) {
+    emit(state.copyWith(isLoading: event.isLoading));
   }
 }

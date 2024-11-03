@@ -14,7 +14,7 @@ class PasswordEvent extends SignInEvent {
 
 class ResetSignInEvent extends SignInEvent {}
 
-class LoadingEvent extends SignInEvent {
+class SignInLoadingEvent extends SignInEvent {
   final bool isLoading;
-  LoadingEvent(this.isLoading);
+  SignInLoadingEvent(this.isLoading);
 }

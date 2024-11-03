@@ -36,7 +36,7 @@ Future<void> emailSignUp({
   } else if (password == confirmPassword) {
     try {
       // enable loading
-      signUpBloc.add(LoadingEvent(true));
+      signUpBloc.add(SignUpLoadingEvent(true));
 
       // create user
       final userCredential = await FirebaseAuth.instance
@@ -74,9 +74,12 @@ Future<void> emailSignUp({
         );
 
         // disable loading
-        signUpBloc.add(LoadingEvent(false));
+        signUpBloc.add(SignUpLoadingEvent(false));
         // reset the bloc
         signUpBloc.add(ResetSignUpEvent());
+
+        // pop the screen
+        Navigator.pop(context);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -100,7 +103,7 @@ Future<void> emailSignUp({
           text: "${SignUpText.unknownError}: ${e.code}",
         );
       }
-      signUpBloc.add(LoadingEvent(false));
+      signUpBloc.add(SignUpLoadingEvent(false));
     }
   }
 }

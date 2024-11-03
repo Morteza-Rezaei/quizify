@@ -7,7 +7,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     on<EmailEvent>(_emailEvent);
     on<PasswordEvent>(_passwordEvent);
     on<ResetSignInEvent>(_resetEvent);
-    on<LoadingEvent>(_toggleLoadingEvent);
+    on<SignInLoadingEvent>(_toggleLoadingEvent);
   }
 
   void _emailEvent(EmailEvent event, Emitter<SignInState> emit) {
@@ -22,7 +22,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     emit(const SignInState());
   }
 
-  void _toggleLoadingEvent(LoadingEvent event, Emitter<SignInState> emit) {
+  void _toggleLoadingEvent(
+      SignInLoadingEvent event, Emitter<SignInState> emit) {
     emit(state.copyWith(isLoading: event.isLoading));
   }
 }

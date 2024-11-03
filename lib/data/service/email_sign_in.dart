@@ -8,6 +8,7 @@ import 'package:quizify/blocs/sign_in_blocs/sign_in_events.dart';
 import 'package:quizify/constants/values/strings/sign_in_text.dart';
 import 'package:quizify/data/service/storage_constants.dart';
 import 'package:quizify/global.dart';
+import 'package:quizify/screens/home/home_screen.dart';
 import 'package:quizify/widgets/app_widgets.dart';
 
 Future<void> emailSignIn({
@@ -21,14 +22,14 @@ Future<void> emailSignIn({
 
   try {
     // enable loading
-    signInBloc.add(LoadingEvent(true));
+    signInBloc.add(SignInLoadingEvent(true));
 
     final UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
 
     if (userCredential.user == null) {
       // disable loading
-      signInBloc.add(LoadingEvent(false));
+      signInBloc.add(SignInLoadingEvent(false));
       // show snackbar
       showSnackBar(
         context: context,
@@ -38,7 +39,7 @@ Future<void> emailSignIn({
     }
     if (userCredential.user!.emailVerified == false) {
       // disable loading
-      signInBloc.add(LoadingEvent(false));
+      signInBloc.add(SignInLoadingEvent(false));
       // show snackbar
       showSnackBar(
         context: context,
@@ -60,12 +61,21 @@ Future<void> emailSignIn({
       );
 
       // disable loading
-      signInBloc.add(LoadingEvent(false));
+      signInBloc.add(SignInLoadingEvent(false));
       // the reset event of the bloc
       signInBloc.add(ResetSignInEvent());
+
+      // navigate to the home screen
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+        (route) => false,
+      );
     } else {
       // disable loading
-      signInBloc.add(LoadingEvent(false));
+      signInBloc.add(SignInLoadingEvent(false));
       // show snackbar
       showSnackBar(
         context: context,
@@ -107,6 +117,6 @@ Future<void> emailSignIn({
     }
 
     // disable loading
-    signInBloc.add(LoadingEvent(false));
+    signInBloc.add(SignInLoadingEvent(false));
   }
 }

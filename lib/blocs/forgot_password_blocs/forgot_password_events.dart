@@ -8,3 +8,8 @@ class EmailEvent extends ForgotPasswordEvent {
 }
 
 class ResetForgotPasswordEvent extends ForgotPasswordEvent {}
+
+class ForgotPasswordLoadingEvent extends ForgotPasswordEvent {
+  final bool isLoading;
+  ForgotPasswordLoadingEvent(this.isLoading);
+}
