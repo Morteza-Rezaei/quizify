@@ -20,4 +20,7 @@ class QuizPath {
 
   // error images
   static const String error = "assets/images/dizzy-robot.png";
+
+  // time up
+  static const String timeUp = "assets/images/finish-line.png";
 }

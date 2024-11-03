@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:quizify/constants/padding_and_border/border_radius.dart';
 import 'package:quizify/constants/padding_and_border/paddings.dart';
 import 'package:quizify/constants/values/colors/app_colors.dart';
+import 'package:quizify/constants/values/paths/quiz_path.dart';
+import 'package:quizify/constants/values/strings/quiz_text.dart';
 import 'package:quizify/data/models/quiz_model.dart';
 import 'package:quizify/screens/quiz/quiz_result_screen.dart';
 import 'package:quizify/widgets/app_widgets.dart';
@@ -57,29 +59,23 @@ class _QuizScreenStartScreenState extends State<QuizScreenStartScreen> {
       userAnswers.add(-1);
     }
 
-    showDialog(
+    quizWarningAlertDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Süre Doldu'),
-        content: const Text('Süreniz doldu. Sonuçlarınızı görebilirsiniz.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => QuizResultScreen(
-                    quiz: widget.quiz,
-                    userAnswers: userAnswers,
-                  ),
-                ),
-              );
-            },
-            child: const Text('Tamam'),
+      imagePath: QuizPath.timeUp, // Update with your image path
+      title: QuizText.timeUpTitle,
+      content: QuizText.timeUpContent,
+      filledBtnName: QuizText.timeUpButton,
+      onFilledBtnPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => QuizResultScreen(
+              quiz: widget.quiz,
+              userAnswers: userAnswers,
+            ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 

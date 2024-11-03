@@ -46,6 +46,11 @@ class QuizText {
 
   // the quiz screen
   static const String quizScreenButton = "Cevabı Kaydet";
+  // time is up dialog
+  static const String timeUpTitle = "Süre Doldu";
+  static const String timeUpContent =
+      "Süreniz doldu. Sonuçlarınızı görebilirsiniz.";
+  static const String timeUpButton = "Sonuçları Gör";
 
   // the result screen
   static const String resultHeader = "Quiz Sonuçları";

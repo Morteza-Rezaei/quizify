@@ -302,7 +302,6 @@ class _QuizScreenSettingsScreenState extends State<QuizScreenSettingsScreen> {
                               _isLoading = false;
                             });
 
-                            // Todo: Navigate to the quiz screen and remove the route from the stack
                             Navigator.push(
                               context,
                               MaterialPageRoute(
